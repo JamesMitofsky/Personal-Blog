@@ -1,9 +1,10 @@
+import { oneLinerDescription } from "./constants";
+
 const buildConfig = () => {
   const blogId = process.env.NEXT_PUBLIC_BLOG_ID;
   if (!blogId) throw new Error("NEXT_PUBLIC_BLOG_ID is missing");
-  const name = "James M."
+  const name = "James Mitofsky"
   const defaultTitle = "James Mitofsky";
-  const defaultDescription = "Reflections on politics and the world as we know it.";
 
   return {
     baseUrl:"https://jamesm.it",
@@ -15,7 +16,7 @@ const buildConfig = () => {
           default: defaultTitle,
           template: `%s - ${defaultTitle}`,
         },
-        description: defaultDescription,
+        description: oneLinerDescription,
       },
     },
     ogImageSecret:
