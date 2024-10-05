@@ -4,6 +4,7 @@ import { config } from "@/config";
 import { signOgImageUrl } from "@/lib/og-image";
 import Markdown from "react-markdown";
 import { oneLinerDescription } from "../../constants";
+import { FaEnvelope, FaLinkedin } from "react-icons/fa";
 
 const content = `
 ![](./images/hero.jpg)
@@ -40,6 +41,22 @@ const Page = async () => {
       <Header />
       <div className="prose lg:prose-lg dark:prose-invert m-auto mt-20 mb-10 blog-content">
         <Markdown>{content}</Markdown>
+        <div className="flex mt-10 space-x-11">
+          <a
+            href="https://linkedin.com/in/jamesmit"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaLinkedin size={30} />
+          </a>
+          <a
+            href="mailto:jamesmitofsky@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaEnvelope size={30} />
+          </a>
+        </div>
       </div>
       <Footer />
     </div>
