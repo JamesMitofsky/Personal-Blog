@@ -47,16 +47,17 @@ export const Navigation: FunctionComponent = () => {
           <SheetTrigger>
             <Menu size="24" />
           </SheetTrigger>
+          {/* <SheetContent className="text-left max-w-md"> */}
           <SheetContent>
             <SheetHeader>
-              <SheetDescription>
+              <SheetDescription className="mt-4">
                 {menuItems.map((item) => (
                   <a
                     key={item.href}
                     href={item.href}
                     target={item.openInNewTab ? "_blank" : "_self"}
                     className={cn(
-                      "block py-2",
+                      "block py-4 text-lg",
                       pathname === item.href && "font-semibold"
                     )}
                   >
