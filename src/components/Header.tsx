@@ -75,11 +75,16 @@ export const Navigation: FunctionComponent = () => {
 export const Header: FunctionComponent = () => {
   return (
     <section className="flex items-center justify-between mt-8 md:mt-16 mb-12">
-      <Link href="/">
-        <h1 className="text-4xl md:text-6xl font-bold tracking-tighter leading-tight">
-          {config.blog.name}
-        </h1>
-      </Link>
+      <div className="flex gap-4 flex-col">
+        <Link href="/">
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tighter leading-tight">
+            {config.blog.name}
+          </h1>
+        </Link>
+        <h2 className="text-xs md:text-sm font-light tracking-tight leading-snug max-w-[60%]">
+          {config.blog.metadata.description}
+        </h2>
+      </div>
       <Navigation />
     </section>
   );
