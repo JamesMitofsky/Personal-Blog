@@ -1,1 +1,1 @@
-export const oneLinerDescription = "Research and reflections on humanitarian crises and the pursuit of justice."
+export const oneLinerDescription = "Editorials and reflections on policy, humanitarian issues, and justice, exploring the challenges shaping our world today."
