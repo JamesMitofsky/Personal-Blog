@@ -47,7 +47,6 @@ export const Navigation: FunctionComponent = () => {
           <SheetTrigger>
             <Menu size="24" />
           </SheetTrigger>
-          {/* <SheetContent className="text-left max-w-md"> */}
           <SheetContent>
             <SheetHeader>
               <SheetDescription className="mt-4">
