@@ -12,7 +12,7 @@ interface Props {
 export const BlogPostPreview = ({ post }: Props) => {
   return (
     <Link href={`/blog/${post.slug}`} className="block hover:no-underline">
-      <article className="mb-8 group">
+      <article className="group">
         <div className="relative w-full md:h-[300px] h-[200px] mb-4">
           {post.image ? (
             <Image
@@ -33,9 +33,9 @@ export const BlogPostPreview = ({ post }: Props) => {
         <div className="mb-2 text-md text-gray-500">
           <time>{new Date(post.publishedAt).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</time>
         </div>
-        <p className="text-gray-600 text-lg leading-relaxed line-clamp-4 text-muted-foreground dark:text-gray-400 mb-4">{post.description}</p>
+        <p className="text-gray-600 text-md sm:text-lg leading-tight sm:leading-relaxed line-clamp-4 text-muted-foreground dark:text-gray-400 mb-4">{post.description}</p>
 
-        <div className="text-sm text-gray-500 dark:text-gray-400">
+        <div className="hidden sm:block text-sm text-gray-400 dark:text-gray-400">
           {post.tags.map((tag) => (
               <>#{tag}</>
           ))}
@@ -50,7 +50,7 @@ export const BlogPostsPreview: FunctionComponent<{
   className?: string;
 }> = ({ posts, className }) => {
   return (
-    <div className={cn("grid grid-cols-1 gap-x-12 gap-y-16 md:grid-cols-2", className)}>
+    <div className={cn("grid grid-cols-1 gap-x-12 md:gap-y-16 gap-y-10 md:grid-cols-2", className)}>
       {posts.map((post) => (
         <BlogPostPreview key={post.slug} post={post} />
       ))}
