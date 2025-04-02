@@ -11,7 +11,7 @@ interface Props {
 
 export const BlogPostPreview = ({ post }: Props) => {
   return (
-    <Link href={`/blog/${post.slug}`} className="block hover:no-underline">
+    <Link href={`/posts/${post.slug}`} className="block hover:no-underline">
       <article className="group">
         <div className="relative w-full md:h-[300px] h-[200px] mb-4 dark:bg-gray-400 bg-gray-300 rounded-lg">
           {post.image ? (
