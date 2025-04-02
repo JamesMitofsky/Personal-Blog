@@ -18,10 +18,11 @@ export interface Post {
     name: string;
   };
   tags: string[];
-  image: {
+  image?: {
     src: string;
     alt: string;
   };
+  youtube?: string;
 }
 
 export async function getPost(slug: string): Promise<Post> {
@@ -45,10 +46,11 @@ export async function getPost(slug: string): Promise<Post> {
     updatedAt: data.updatedAt,
     author: data.author,
     tags: data.tags || [],
-    image: {
+    image: data.image ? {
       src: `/post-images/${data.image.src}`,
       alt: data.image.alt,
-    },
+    } : undefined,
+    youtube: data.youtube,
   };
 }
 

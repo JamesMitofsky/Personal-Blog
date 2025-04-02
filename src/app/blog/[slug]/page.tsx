@@ -19,12 +19,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: post.title,
       description: post.description,
-      images: [{
+      images: post.image ? [{
         url: post.image.src,
         width: 1200,
         height: 630,
         alt: post.image.alt,
-      }],
+      }] : [],
     },
   };
 }
@@ -33,29 +33,39 @@ export default async function Page({ params }: Props) {
   const post = await getPost(params.slug);
   const relatedPosts = await getRelatedPosts(post);
 
-  console.log('special', post.contentHtml);
-
   return (
     <div className="container mx-auto px-5">
       <Header />
       
       <div className="mb-10">
         <article className="prose lg:prose-xl dark:prose-invert mx-auto break-words">
-        
-
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-4">
             {post.title}
           </h1>
-          <Image
-            src={post.image.src}
-            alt={post.image.alt}
-            className="w-full h-[300px] object-cover mt-0"
-            width={800}
-            height={500}
-            priority
-          />
-       
-            <div dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
+
+          {post.youtube ? (
+            <div className="w-full aspect-video mb-8">
+              <iframe
+                src={`https://www.youtube.com/embed/${post.youtube}`}
+                title={post.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="rounded-lg w-full h-full"
+              />
+            </div>
+          ) : post.image ? (
+            <Image
+              src={post.image.src}
+              alt={post.image.alt}
+              className="w-full object-cover mt-0 rounded-lg"
+              width={1920}
+              height={1080}
+              quality={100}
+              priority
+            />
+          ) : null}
+
+          <div dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
 
 
           <div className="mb-6 text-lg">

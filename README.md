@@ -61,14 +61,6 @@ tags:
 Your post content in markdown...
 ```
 
-## Deployment
-
-The blog can be deployed to any platform that supports Next.js, such as:
-
-- [Vercel](https://vercel.com)
-- [Netlify](https://netlify.com)
-- [DigitalOcean](https://digitalocean.com)
-
 ## License
 
 MIT

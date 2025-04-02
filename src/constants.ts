@@ -1,1 +1,1 @@
-export const oneLinerDescription = "Reflections on policy, global affairs, and my personal journey."
+export const oneLinerDescription = "Reflections on policy, global affairs, and my experiences."
