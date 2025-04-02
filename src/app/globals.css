@@ -77,8 +77,4 @@
     .blog-content img {
       @apply w-full;
     }
-
-    .prose img {
-      @apply my-0;
-    }
   }

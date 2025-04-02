@@ -3,20 +3,20 @@ export const revalidate = 60 * 60; // 1 hour
 import { NextResponse } from "next/server";
 import RSS from "rss";
 import urlJoin from "url-join";
-import { getPosts } from "@/lib/posts";
+import { wisp } from "../../lib/wisp";
 import { config } from "@/config";
 
 const baseUrl = config.baseUrl;
 
 export async function GET() {
-  const { posts } = await getPosts({ limit: 20 });
+  const result = await wisp.getPosts({ limit: 20 });
 
-  const feedItems = posts.map((post) => {
+  const posts = result.posts.map((post) => {
     return {
       title: post.title,
       description: post.description || "",
       url: urlJoin(baseUrl, `/blog/${post.slug}`),
-      date: new Date(post.publishedAt),
+      date: post.publishedAt || new Date(),
     };
   });
 
@@ -27,9 +27,8 @@ export async function GET() {
     feed_url: urlJoin(baseUrl, "/rss"),
     pubDate: new Date(),
   });
-
-  feedItems.forEach((item) => {
-    feed.item(item);
+  posts.forEach((post) => {
+    feed.item(post);
   });
 
   const xml: string = feed.xml({ indent: true });

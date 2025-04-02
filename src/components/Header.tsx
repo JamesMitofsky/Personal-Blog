@@ -12,14 +12,13 @@ import { Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FunctionComponent } from "react";
-import Image from "next/image";
 interface MenuItem {
   name: string;
   href: string;
   openInNewTab?: boolean;
 }
 const menuItems: MenuItem[] = [
-  { name: "Posts", href: "/" },
+  { name: "Blog", href: "/" },
   { name: "About", href: "/about" },
 ];
 export const Navigation: FunctionComponent = () => {
@@ -27,7 +26,7 @@ export const Navigation: FunctionComponent = () => {
 
   return (
     <nav>
-      <div className="hidden md:flex items-center text-lg">
+      <div className="hidden md:flex items-center">
         {menuItems.map((item) => (
           <div key={item.href} className="ml-4 md:ml-8">
             <a
@@ -75,15 +74,14 @@ export const Navigation: FunctionComponent = () => {
 
 export const Header: FunctionComponent = () => {
   return (
-    <section className="flex items-center justify-between my-8 md:mt-16 lg:mb-28">
-      <div className="flex gap-7">
+    <section className="flex items-center justify-between my-8 md:mt-16">
+      <div className="flex gap-4 flex-col">
         <Link href="/">
-          {/* <h1 className="text-4xl md:text-6xl font-bold tracking-tighter leading-tight">
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tighter leading-tight">
             {config.blog.name}
-          </h1> */}
-          <Image width={110} height={110} src="/jm-logo.svg" alt="JM Logo" />
+          </h1>
         </Link>
-        <h2 className="text-xs md:text-sm font-light tracking-tight leading-snug max-w-[240px] flex items-end">
+        <h2 className="text-xs md:text-sm font-light tracking-tight leading-snug max-w-[60%]">
           {config.blog.metadata.description}
         </h2>
       </div>

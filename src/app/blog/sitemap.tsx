@@ -1,14 +1,22 @@
 import { config } from "@/config";
-import { getPosts } from "@/lib/posts";
-import { MetadataRoute } from "next";
+import { wisp } from "@/lib/wisp";
+import type { MetadataRoute } from "next";
+import urlJoin from "url-join";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const { posts } = await getPosts({ limit: Infinity });
-
-  return posts.map((post) => ({
-    url: `${config.baseUrl}/blog/${post.slug}`,
-    lastModified: new Date(post.updatedAt || post.publishedAt),
-    changeFrequency: "monthly",
-    priority: 0.7,
-  }));
+  const result = await wisp.getPosts();
+  return [
+    {
+      url: urlJoin(config.baseUrl, "blog"),
+      lastModified: new Date(),
+      priority: 0.8,
+    },
+    ...result.posts.map((post) => {
+      return {
+        url: urlJoin(config.baseUrl, "blog", post.slug),
+        lastModified: new Date(post.updatedAt),
+        priority: 0.8,
+      };
+    }),
+  ];
 }

@@ -3,7 +3,7 @@ import { BlogPostsPagination } from "@/components/BlogPostsPagination";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Badge } from "@/components/ui/badge";
-import { getPosts } from "@/lib/posts";
+import { wisp } from "@/lib/wisp";
 import { CircleX } from "lucide-react";
 import Link from "next/link";
 
@@ -30,18 +30,7 @@ const Page = async ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   const page = searchParams.page ? parseInt(searchParams.page as string) : 1;
-  const limit = 6;
-  const { posts, total } = await getPosts({ page, limit, tag: slug });
-  const totalPages = Math.ceil(total / limit);
-
-  const pagination = {
-    page,
-    limit,
-    totalPages,
-    nextPage: page < totalPages ? page + 1 : null,
-    prevPage: page > 1 ? page - 1 : null,
-  };
-
+  const result = await wisp.getPosts({ limit: 6, tags: [slug], page });
   return (
     <div className="container mx-auto px-5 mb-10">
       <Header />
@@ -51,9 +40,9 @@ const Page = async ({
           Posts tagged with <strong className="mx-2">#{slug}</strong>{" "}
         </Badge>
       </Link>
-      <BlogPostsPreview posts={posts} />
+      <BlogPostsPreview posts={result.posts} />
       <BlogPostsPagination
-        pagination={pagination}
+        pagination={result.pagination}
         basePath={`/tag/${slug}/?page=`}
       />
       <Footer />

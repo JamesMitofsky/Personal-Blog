@@ -1,96 +1,80 @@
 "use client";
-import { Post } from "@/lib/posts";
+import { GetPostResult } from "@/lib/wisp";
 import Link from "next/link";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import rehypeHighlight from "rehype-highlight";
-import "highlight.js/styles/github-dark.css";
+import sanitize, { defaults } from "sanitize-html";
 
 export const PostContent = ({ content }: { content: string }) => {
+  const sanitizedContent = sanitize(content, {
+    allowedTags: [
+      "b",
+      "i",
+      "em",
+      "strong",
+      "a",
+      "img",
+      "h1",
+      "h2",
+      "h3",
+      "code",
+      "pre",
+      "p",
+      "li",
+      "ul",
+      "ol",
+      "blockquote",
+      // tables
+      "td",
+      "th",
+      "table",
+      "tr",
+      "tbody",
+      "thead",
+      "tfoot",
+      "small",
+      "div",
+      "iframe",
+    ],
+    allowedAttributes: {
+      ...defaults.allowedAttributes,
+      "*": ["style"],
+      iframe: ["src", "allowfullscreen", "style"],
+    },
+    allowedIframeHostnames: ["www.youtube.com", "www.youtube-nocookie.com"],
+  });
   return (
-    <div className="prose prose-lg dark:prose-invert max-w-none 
-      prose-headings:font-bold 
-      prose-a:text-primary hover:prose-a:opacity-70
-      prose-p:text-base prose-p:leading-relaxed
-      prose-li:text-base
-      prose-pre:bg-zinc-900 prose-pre:border prose-pre:border-zinc-800
-      prose-code:text-sm prose-code:leading-relaxed
-      prose-img:rounded-lg">
-      <ReactMarkdown 
-        remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeHighlight]}
-        components={{
-          pre: ({ children }) => <pre className="not-prose">{children}</pre>,
-          code: ({ node, className, children }) => {
-            const match = /language-(\w+)/.exec(className || '')
-            const isInPre = node?.type === 'element' && 
-                           'tagName' in node && 
-                           node.tagName === 'code' && 
-                           node.position?.start.line !== node.position?.end.line
-            
-            if (isInPre) {
-              return (
-                <code className={className}>
-                  {children}
-                </code>
-              )
-            }
-            
-            return (
-              <code className="bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded-md text-sm">
-                {children}
-              </code>
-            )
-          }
-        }}
-      >
-        {content}
-      </ReactMarkdown>
-    </div>
+    <div
+      className="blog-content mx-auto"
+      dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+    ></div>
   );
 };
 
-export const BlogPostContent = ({ post }: { post: Post }) => {
+export const BlogPostContent = ({ post }: { post: GetPostResult["post"] }) => {
   if (!post) return null;
-  
+  const { title, publishedAt, createdAt, content, tags } = post;
   return (
-    <article className="max-w-3xl mx-auto my-8">
-      <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
-      {post.description && <p className="text-lg text-muted-foreground mb-6">{post.description}</p>}
-      <div className="flex items-center gap-4 text-sm text-muted-foreground mb-8">
-        {post.author && (
-          <div className="flex items-center gap-2">
-            {post.author.name}
-          </div>
-        )}
-        <time dateTime={post.publishedAt}>
-          {new Date(post.publishedAt).toLocaleDateString()}
-        </time>
-      </div>
-      <div 
-        className="prose prose-lg dark:prose-invert max-w-none 
-          prose-headings:font-bold 
-          prose-a:text-primary hover:prose-a:opacity-70
-          prose-p:text-base prose-p:leading-relaxed
-          prose-li:text-base
-          prose-pre:bg-zinc-900 prose-pre:border prose-pre:border-zinc-800
-          prose-code:text-sm prose-code:leading-relaxed
-          prose-img:rounded-lg"
-        dangerouslySetInnerHTML={{ __html: post.contentHtml }} 
-      />
-      {post.tags && post.tags.length > 0 && (
+    <div>
+      <div className="prose lg:prose-xl dark:prose-invert mx-auto lg:prose-h1:text-4xl mb-10 lg:mt-20 break-words">
+        <h1>{title}</h1>
+        <PostContent content={content} />
+
         <div className="mt-10 opacity-40 text-sm">
-          {post.tags.map((tag) => (
+          {tags.map((tag) => (
             <Link
-              key={tag}
-              href={`/tag/${tag}`}
+              key={tag.id}
+              href={`/tag/${tag.name}`}
               className="text-primary mr-2"
             >
-              #{tag}
+              #{tag.name}
             </Link>
           ))}
         </div>
-      )}
-    </article>
+        <div className="text-sm opacity-40 mt-4">
+          {Intl.DateTimeFormat("en-US").format(
+            new Date(publishedAt || createdAt)
+          )}
+        </div>
+      </div>
+    </div>
   );
 };

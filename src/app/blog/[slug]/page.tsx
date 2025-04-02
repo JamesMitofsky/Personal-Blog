@@ -1,90 +1,80 @@
+import { BlogPostContent } from "@/components/BlogPostContent";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { getPost, getRelatedPosts } from "@/lib/posts";
-import { Metadata } from "next";
-import Image from "next/image";
+import { RelatedPosts } from "@/components/RelatedPosts";
+import { config } from "@/config";
+import { signOgImageUrl } from "@/lib/og-image";
+import { wisp } from "@/lib/wisp";
+import { notFound } from "next/navigation";
+import type { BlogPosting, WithContext } from "schema-dts";
 
-interface Props {
-  params: {
-    slug: string;
-  };
-}
+export async function generateMetadata({
+  params: { slug },
+}: {
+  params: Params;
+}) {
+  const result = await wisp.getPost(slug);
+  if (!result || !result.post) {
+    return {
+      title: "Blog post not found",
+    };
+  }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = await getPost(params.slug);
-  
+  const { title, description, image } = result.post;
+  const generatedOgImage = signOgImageUrl({ title, brand: config.blog.name });
+
   return {
-    title: post.title,
-    description: post.description,
+    title,
+    description,
     openGraph: {
-      title: post.title,
-      description: post.description,
-      images: [{
-        url: post.image.src,
-        width: 1200,
-        height: 630,
-        alt: post.image.alt,
-      }],
+      title,
+      description,
+      images: image ? [generatedOgImage, image] : [generatedOgImage],
     },
   };
 }
+interface Params {
+  slug: string;
+}
 
-export default async function Page({ params }: Props) {
-  const post = await getPost(params.slug);
-  const relatedPosts = await getRelatedPosts(post);
+const Page = async ({ params: { slug } }: { params: Params }) => {
+  const result = await wisp.getPost(slug);
+  const { posts } = await wisp.getRelatedPosts({ slug, limit: 3 });
 
-  console.log('special', post.contentHtml);
+  if (!result || !result.post) {
+    return notFound();
+  }
+
+  const { title, publishedAt, updatedAt, image, author } = result.post;
+
+  const jsonLd: WithContext<BlogPosting> = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: title,
+    image: image ? image : undefined,
+    datePublished: publishedAt ? publishedAt.toString() : undefined,
+    dateModified: updatedAt.toString(),
+    author: {
+      "@type": "Person",
+      name: author.name ?? undefined,
+      image: author.image ?? undefined,
+    },
+  };
 
   return (
-    <div className="container mx-auto px-5">
-      <Header />
-      
-      <div className="mb-10">
-        <article className="prose lg:prose-xl dark:prose-invert mx-auto break-words">
-        
-
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-4">
-            {post.title}
-          </h1>
-          <Image
-            src={post.image.src}
-            alt={post.image.alt}
-            className="w-full h-[300px] object-cover mt-0"
-            width={800}
-            height={500}
-            priority
-          />
-       
-            <div dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
-
-
-          <div className="mb-6 text-lg">
-            <time className="text-gray-500">
-              {new Date(post.publishedAt).toLocaleDateString()}
-            </time>
-          </div>
-
-          {/* the list of tags should be here */}
-        </article>
-
-        {relatedPosts.length > 0 && (
-          <div className="max-w-2xl mx-auto mt-16">
-            <h2 className="text-2xl font-bold mb-4">Related Posts</h2>
-            <div className="grid gap-4">
-              {relatedPosts.map((relatedPost) => (
-                <div key={relatedPost.slug} className="border p-4 rounded">
-                  <h3 className="font-semibold">{relatedPost.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-400">
-                    {relatedPost.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="container mx-auto px-5">
+        <Header />
+        <BlogPostContent post={result.post} />
+        <RelatedPosts posts={posts} />
+        <Footer />
       </div>
-
-      <Footer />
-    </div>
+    </>
   );
-}
+};
+
+export default Page;
