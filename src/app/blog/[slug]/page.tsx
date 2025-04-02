@@ -21,9 +21,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: post.title,
       description: post.description,
       images: post.image ? [{
-        url: post.image.src,
-        width: 1200,
-        height: 630,
+        url: new URL(post.image.src.toString(), process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000').toString(),
+        width: post.image.width || 1200,
+        height: post.image.height || 630,
         alt: post.image.alt,
       }] : [],
     },
