@@ -3,8 +3,10 @@ import matter from "gray-matter";
 import path from "path";
 import { remark } from 'remark';
 import html from 'remark-html';
+import type { ImageProps } from "next/image";
 
 const postsDirectory = path.join(process.cwd(), "posts");
+const postImagesDirectory = path.join(process.cwd(), "public", "post-images");
 
 export interface Post {
   title: string;
@@ -18,10 +20,7 @@ export interface Post {
     name: string;
   };
   tags: string[];
-  image?: {
-    src: string;
-    alt: string;
-  };
+  image?: ImageProps;
   youtube?: string;
 }
 
@@ -36,6 +35,19 @@ export async function getPost(slug: string): Promise<Post> {
     .process(content);
   const contentHtml = processedContent.toString();
 
+  // If there's an image in the frontmatter, import it
+  let imageProps: ImageProps | undefined;
+  if (data.image?.src) {
+    const imagePath = path.join(postImagesDirectory, data.image.src);
+    if (fs.existsSync(imagePath)) {
+      const imageModule = await import(`../../public/post-images/${data.image.src}`);
+      imageProps = {
+        ...imageModule.default,
+        alt: data.image.alt,
+      };
+    }
+  }
+
   return {
     title: data.title,
     description: data.description,
@@ -46,10 +58,7 @@ export async function getPost(slug: string): Promise<Post> {
     updatedAt: data.updatedAt,
     author: data.author,
     tags: data.tags || [],
-    image: data.image ? {
-      src: `/post-images/${data.image.src}`,
-      alt: data.image.alt,
-    } : undefined,
+    image: imageProps,
     youtube: data.youtube,
   };
 }

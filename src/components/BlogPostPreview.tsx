@@ -13,14 +13,16 @@ export const BlogPostPreview = ({ post }: Props) => {
   return (
     <Link href={`/blog/${post.slug}`} className="block hover:no-underline">
       <article className="group">
-        <div className="relative w-full md:h-[300px] h-[200px] mb-4">
+        <div className="relative w-full md:h-[300px] h-[200px] mb-4 dark:bg-gray-400 bg-gray-300 rounded-lg">
           {post.image ? (
             <Image
               src={post.image.src}
               alt={post.image.alt}
               fill
+              placeholder="blur"
+              blurDataURL={post.image.blurDataURL}
               className="object-cover rounded-lg group-hover:opacity-90 transition-opacity"
-              priority
+              sizes="(max-width: 768px) 100vw, 768px"
             />
           ) : (
             <div className="w-full h-full bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center">
