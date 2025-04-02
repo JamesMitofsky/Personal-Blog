@@ -76,7 +76,7 @@ export const Navigation: FunctionComponent = () => {
 export const Header: FunctionComponent = () => {
   return (
     <section className="flex items-end justify-between mt-8 mb-16 md:my-16 xl:my-20">
-      <div className="flex gap-3 md:gap-7">
+      <div className="flex gap-3 md:gap-7 items-end">
         <Link href="/">
           <Image 
             width={110} 
@@ -86,7 +86,7 @@ export const Header: FunctionComponent = () => {
             className="w-[50px] md:w-[110px] dark:invert"
           />
         </Link>
-        <h2 className="hidden md:flex md:text-sm font-light tracking-tight leading-snug max-w-[170px] md:max-w-[240px] items-end">
+        <h2 className="flex text-xs text-gray-300 md:text-sm font-light tracking-tight leading-snug max-w-[170px] items-end -mb-[3px]">
           {config.blog.metadata.description}
         </h2>
       </div>
