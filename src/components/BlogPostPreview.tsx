@@ -1,61 +1,58 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { GetPostsResult } from "@/lib/wisp";
-import { formatDate } from "date-fns";
+import { Post } from "@/lib/posts";
 import Image from "next/image";
 import Link from "next/link";
 import { FunctionComponent } from "react";
 
-export const BlogPostPreview: FunctionComponent<{
-  post: GetPostsResult["posts"][0];
-}> = ({ post }) => {
+interface Props {
+  post: Post;
+}
+
+export const BlogPostPreview = ({ post }: Props) => {
   return (
-    <div className="break-words">
-      <Link href={`/blog/${post.slug}`}>
-        <div className="aspect-[16/9] relative">
-          <Image
-            alt={post.title}
-            className="object-cover"
-            src={post.image || "/images/placeholder.webp"}
-            fill
-          />
-        </div>
-      </Link>
-      <div className="grid grid-cols-1 gap-3 md:col-span-2 mt-4">
-        <h2 className="font-sans font-semibold tracking-tighter text-primary text-2xl md:text-3xl">
-          <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-        </h2>
-        <div className="prose lg:prose-lg italic tracking-tighter text-muted-foreground">
-          {formatDate(post.publishedAt || post.updatedAt, "dd MMMM yyyy")}
-        </div>
-        <div className="prose lg:prose-lg leading-relaxed md:text-lg line-clamp-4 text-muted-foreground">
-          {post.description}
-        </div>
-        <div className="text-sm text-muted-foreground">
-          {post.tags.map((tag) => (
-            <div key={tag.id} className="mr-2 inline-block">
-              <Link href={`/tag/${tag.name}`}>#{tag.name}</Link>
+    <Link href={`/blog/${post.slug}`} className="block hover:no-underline">
+      <article className="mb-8 group">
+        <div className="relative w-full h-[300px] mb-4">
+          {post.image ? (
+            <Image
+              src={post.image.src}
+              alt={post.image.alt}
+              fill
+              className="object-cover rounded-lg group-hover:opacity-90 transition-opacity"
+              priority
+            />
+          ) : (
+            <div className="w-full h-full bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center">
+              <span className="text-gray-400">No preview available</span>
             </div>
+          )}
+        </div>
+
+        <h2 className="text-2xl font-bold mb-2 group-hover:underline">{post.title}</h2>
+        <div className="mb-2 text-md text-gray-500">
+          <time>{new Date(post.publishedAt).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</time>
+        </div>
+        <p className="text-gray-600 text-lg leading-relaxed line-clamp-4 text-muted-foreground dark:text-gray-400 mb-4">{post.description}</p>
+
+        <div className="text-sm text-gray-500 dark:text-gray-400">
+          {post.tags.map((tag) => (
+              <>#{tag}</>
           ))}
         </div>
-      </div>
-    </div>
+      </article>
+    </Link>
   );
 };
 
 export const BlogPostsPreview: FunctionComponent<{
-  posts: GetPostsResult["posts"];
+  posts: Post[];
   className?: string;
 }> = ({ posts, className }) => {
   return (
-    <div
-      className={cn(
-        "grid grid-cols-1 gap-16 lg:gap-28 md:grid-cols-2 md:my-16 my-8",
-        className
-      )}
-    >
+    <div className={cn("grid grid-cols-1 gap-x-12 gap-y-16 md:grid-cols-2", className)}>
       {posts.map((post) => (
-        <BlogPostPreview key={post.id} post={post} />
+        <BlogPostPreview key={post.slug} post={post} />
       ))}
     </div>
   );
