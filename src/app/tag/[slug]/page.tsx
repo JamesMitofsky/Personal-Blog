@@ -31,7 +31,7 @@ const Page = async ({
 }) => {
   const page = searchParams.page ? parseInt(searchParams.page as string) : 1;
   const limit = 6;
-  const { posts, total } = await getPosts({ page, limit, tag: slug });
+  const { posts, total } = await getPosts({ page, limit, tags: [slug] });
   const totalPages = Math.ceil(total / limit);
 
   const pagination = {
