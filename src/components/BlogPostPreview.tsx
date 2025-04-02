@@ -13,7 +13,7 @@ export const BlogPostPreview = ({ post }: Props) => {
   return (
     <Link href={`/blog/${post.slug}`} className="block hover:no-underline">
       <article className="mb-8 group">
-        <div className="relative w-full h-[300px] mb-4">
+        <div className="relative w-full md:h-[300px] h-[200px] mb-4">
           {post.image ? (
             <Image
               src={post.image.src}

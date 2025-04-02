@@ -75,15 +75,18 @@ export const Navigation: FunctionComponent = () => {
 
 export const Header: FunctionComponent = () => {
   return (
-    <section className="flex items-end justify-between my-12 mb-14 md:my-16 xl:my-20">
-      <div className="flex gap-7">
+    <section className="flex items-end justify-between mt-6 mb-8 md:my-16 xl:my-20">
+      <div className="flex gap-3 md:gap-7">
         <Link href="/">
-          {/* <h1 className="text-4xl md:text-6xl font-bold tracking-tighter leading-tight">
-            {config.blog.name}
-          </h1> */}
-          <Image width={110} height={110} src="/jm-logo.svg" alt="JM Logo" />
+          <Image 
+            width={110} 
+            height={110} 
+            src="/jm-logo.svg" 
+            alt="JM Logo" 
+            className="w-[50px] md:w-[110px]"
+          />
         </Link>
-        <h2 className="text-xs md:text-sm font-light tracking-tight leading-snug max-w-[240px] flex items-end">
+        <h2 className="text-xs md:text-sm font-light tracking-tight leading-snug max-w-[170px] md:max-w-[240px] flex items-end">
           {config.blog.metadata.description}
         </h2>
       </div>
