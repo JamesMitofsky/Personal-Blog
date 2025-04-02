@@ -40,7 +40,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main>{children}</main>
+          <main className="min-h-screen flex flex-col">{children}</main>
         </ThemeProvider>
       </body>
     </html>

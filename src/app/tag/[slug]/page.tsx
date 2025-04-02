@@ -43,7 +43,7 @@ const Page = async ({
   };
 
   return (
-    <div className="container mx-auto px-5 mb-10">
+    <div className="container mx-auto px-5 min-h-screen mb-10">
       <Header />
       <Link href="/">
         <Badge className="px-2 py-1">

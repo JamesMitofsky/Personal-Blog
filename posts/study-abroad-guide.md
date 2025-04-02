@@ -1,5 +1,5 @@
 ---
-title: The Survival Guide To Study Abroad in Caen, France
+title: A Survival Guide To Study Abroad in France
 description: "Students face unique challenges to navigating French bureaucracy. Having confronted them myself, I'm sharing out what I learned for others."
 publishedAt: "2024-10-28T00:00:00+01:00"
 tags:

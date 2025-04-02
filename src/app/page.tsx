@@ -23,7 +23,7 @@ const Page = async ({
   };
 
   return (
-    <div className="container mx-auto px-5 mb-10">
+    <div className="container mx-auto px-5 min-h-screen">
       <Header />
       <BlogPostsPreview posts={posts} />
       <BlogPostsPagination pagination={pagination} />

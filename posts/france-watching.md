@@ -1,6 +1,6 @@
 ---
 title: France Is Watching & They Don't Understand
-description: "Living in Caen, France, I've often found myself in conversations contrasting Donald Trump with Kamala Harris."
+description: "Living in France, it's practically become a trope how often I'm asked about 'the real difference' between Trump and Harris."
 publishedAt: "2024-11-05T00:00:00+01:00"
 tags:
   - editorial
@@ -17,4 +17,4 @@ America has a duty to be a stable, reliable partner on the world stage. It's con
 
 Despite the confusion that remains in Europe about whether these candidates are very different or smaller variations on the same theme, it is crucial that we take steps to further engage not just with the diplomats of countries where we have a presence but encourage cultural exchanges. Of ideas, students, and languages. This is the path toward clearer political communication and stronger transatlantic relationships.
 
-[Full original broadcast here.](https://france3-regions.francetvinfo.fr/normandie/programmes/france-3_normandie_ici-19-20-normandie-caen)
+The full original broadcast is [here](https://france3-regions.francetvinfo.fr/normandie/programmes/france-3_normandie_ici-19-20-normandie-caen).

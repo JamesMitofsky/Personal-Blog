@@ -30,9 +30,9 @@ export async function generateMetadata() {
 
 const Page = async () => {
   return (
-    <div className="container mx-auto px-5">
+    <div className="container mx-auto px-5 min-h-screen">
       <Header />
-      <div className="prose lg:prose-lg dark:prose-invert m-auto blog-content">
+      <div className="prose lg:prose-lg dark:prose-invert m-auto blog-content [&_img]:rounded-lg">
         <Markdown>{content}</Markdown>
         <div className="flex mt-10 space-x-11">
           <a

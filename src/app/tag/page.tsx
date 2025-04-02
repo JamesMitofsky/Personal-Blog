@@ -13,7 +13,7 @@ const Page = async () => {
   const tags = await getAllTags();
 
   return (
-    <div className="container mx-auto px-5 mb-10">
+    <div className="container mx-auto px-5 min-h-screen mb-10">
       <Header />
       <div className="prose dark:prose-invert mx-auto">
         <h1>Tags</h1>
