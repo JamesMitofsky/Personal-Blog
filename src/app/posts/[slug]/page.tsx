@@ -85,7 +85,7 @@ export default async function Page({ params }: Props) {
               {relatedPosts.map((relatedPost) => (
                 <Link 
                   key={relatedPost.slug} 
-                  href={`/blog/${relatedPost.slug}`}
+                  href={`/posts/${relatedPost.slug}`}
                   className="group bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-lg overflow-hidden transition-colors duration-200 block"
                 >
                   {relatedPost.image && (
