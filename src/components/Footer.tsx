@@ -3,7 +3,7 @@ import { FunctionComponent } from "react";
 
 export const Footer: FunctionComponent = () => {
   return (
-    <section className="mt-24 mb-10 flex justify-center items-center [min-h-screen:mt-auto]">
+    <section className="mt-10 mb-4 md:mt-24 md:mb-10 flex justify-center items-center [min-h-screen:mt-auto]">
 
       <a
         target="_blank"
