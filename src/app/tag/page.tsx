@@ -1,49 +1,33 @@
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { config } from "@/config";
-import { signOgImageUrl } from "@/lib/og-image";
-import { wisp } from "@/lib/wisp";
+import { Badge } from "@/components/ui/badge";
+import { getAllTags } from "@/lib/posts";
 import Link from "next/link";
 
-export async function generateMetadata() {
-  return {
-    title: "Tags",
-    description: "Different blog post categories",
-    openGraph: {
-      title: "Tags",
-      description: "Different blog post categories",
-      images: [
-        signOgImageUrl({
-          title: "Blog Post Categories",
-          brand: config.blog.name,
-        }),
-      ],
-    },
-  };
-}
+export const metadata = {
+  title: "Tags",
+  description: "Browse posts by tag",
+};
 
-export default async function Page() {
-  const result = await wisp.getTags();
+const Page = async () => {
+  const tags = await getAllTags();
 
   return (
-    <div className="container mx-auto px-5">
+    <div className="container mx-auto px-5 mb-10">
       <Header />
-      <div className="mt-20 mb-12 text-center">
-        <h1 className="mb-2 text-5xl font-bold">Tags</h1>
-        <p className="text-lg opacity-50">List of all tags</p>
-      </div>
-      <div className="my-10 max-w-6xl text-balance text-center text-xl mb-48">
-        {result.tags.map((tag) => (
-          <Link
-            key={tag.id}
-            href={`/tag/${tag.name}`}
-            className="text-primary mr-2 inline-block"
-          >
-            #{tag.name}
-          </Link>
-        ))}
+      <div className="prose dark:prose-invert mx-auto">
+        <h1>Tags</h1>
+        <div className="flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <Link key={tag} href={`/tag/${tag}`}>
+              <Badge variant="secondary">#{tag}</Badge>
+            </Link>
+          ))}
+        </div>
       </div>
       <Footer />
     </div>
   );
-}
+};
+
+export default Page;

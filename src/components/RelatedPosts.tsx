@@ -1,13 +1,13 @@
 "use client";
 
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
-import type { GetRelatedPostsResult } from "@wisp-cms/client";
+import { Post } from "@/lib/posts";
 import Image from "next/image";
 import Link from "next/link";
 import type { FunctionComponent } from "react";
 
 export const RelatedPosts: FunctionComponent<{
-  posts: GetRelatedPostsResult["posts"];
+  posts: Post[];
 }> = ({ posts }) => {
   if (posts.length === 0) {
     return null;
@@ -20,14 +20,14 @@ export const RelatedPosts: FunctionComponent<{
       </div>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         {posts.slice(0, 3).map((post) => (
-          <div className=" bg-muted overflow-hidden rounded-lg" key={post.id}>
+          <div className="bg-muted overflow-hidden rounded-lg" key={post.slug}>
             <Link href={`/blog/${post.slug}`}>
               <AspectRatio ratio={16 / 9} className="w-full">
                 <Image
-                  src={post.image || "/images/placeholder.png"}
+                  src={post.image || "/images/placeholder.webp"}
                   alt={post.title}
                   fill
-                  className="h -full min-h-full min-w-full object-cover object-center"
+                  className="h-full min-h-full min-w-full object-cover object-center"
                 />
               </AspectRatio>
             </Link>
