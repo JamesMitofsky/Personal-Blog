@@ -98,7 +98,7 @@ export async function getPosts({ limit = 10, page = 1, tags = [] }: { limit?: nu
 export async function getRelatedPosts(currentPost: Post, limit = 3): Promise<Post[]> {
   const { posts } = await getPosts({ limit: Infinity });
   
-  // Filter out the current post
+  // Filter out the current post and graduation address post
   const otherPosts = posts.filter(post => post.slug !== currentPost.slug);
   
   // Score each post based on tag matches
@@ -111,10 +111,25 @@ export async function getRelatedPosts(currentPost: Post, limit = 3): Promise<Pos
   });
   
   // Sort by score and get top posts
-  return scoredPosts
-    .sort((a, b) => b.score - a.score)
-    .slice(0, limit)
+  const sortedPosts = scoredPosts
+    .sort((a, b) => b.score - a.score);
+
+  // Get posts with matching tags first
+  const postsWithTags = sortedPosts
+    .filter(({ score }) => score > 0)
     .map(({ post }) => post);
+
+  if (postsWithTags.length >= limit) {
+    return postsWithTags.slice(0, limit);
+  }
+
+  // If we need more posts, get posts without the graduation address
+  const remainingPosts = sortedPosts
+    .filter(({ score }) => score === 0)
+    .map(({ post }) => post)
+    .filter(post => !post.slug.includes('hazen-graduation-address'));
+
+  return [...postsWithTags, ...remainingPosts].slice(0, limit);
 }
 
 export async function getAllTags(): Promise<string[]> {
