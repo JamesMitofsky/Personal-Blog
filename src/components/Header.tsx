@@ -105,7 +105,7 @@ export const Header: FunctionComponent = () => {
           </svg>
         </Link>
         <h2 className="flex text-xs dark:text-gray-300 text-gray-900 md:text-sm font-light tracking-tight leading-snug max-w-[170px] items-end -mb-[3px]">
-          {config.blog.metadata.description}
+          {config.site.metadata.description}
         </h2>
       </div>
       <Navigation />
