@@ -28,7 +28,7 @@ const Page = async () => {
           className="rounded-lg mb-4"
           priority
         />
-        <p>I am a researcher and activist focused on humanitarian crises and international cooperation.</p>
+        <p>I am James Mitofsky, a researcher and activist focused on humanitarian crises and international cooperation.</p>
 
         <p>As democracy is further endangered by new behaviors and dynamics around the globe, I&apos;m interested in how to preserve our communication and protect a global order of peace. I believe the problems of this moment demand new ways of thinking about multilateral collaboration.</p>
 
