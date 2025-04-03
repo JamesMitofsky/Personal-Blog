@@ -32,16 +32,16 @@ export const BlogPostPreview = ({ post }: Props) => {
         </div>
 
         <h2 className="text-2xl font-bold mb-2 group-hover:underline">{post.title}</h2>
-        <div className="mb-2 text-md text-gray-500">
+        <div className="mb-2 text-md text-gray-500 flex justify-between w-full">
           <time>{new Date(post.publishedAt).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</time>
+          <div className="hidden sm:block text-sm text-gray-400 dark:text-gray-400">
+            {post.tags.map((tag) => (
+              <>#{tag}</>
+            ))}
+          </div>
         </div>
         <p className="text-gray-600 text-md sm:text-lg leading-tight sm:leading-relaxed line-clamp-4 text-muted-foreground dark:text-gray-400 mb-4">{post.description}</p>
 
-        <div className="hidden sm:block text-sm text-gray-400 dark:text-gray-400">
-          {post.tags.map((tag) => (
-              <>#{tag}</>
-          ))}
-        </div>
       </article>
     </Link>
   );
