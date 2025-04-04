@@ -10,14 +10,14 @@ const fontSans = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: {
-    absolute: config.blog.metadata.title.absolute,
-    default: config.blog.metadata.title.default,
-    template: config.blog.metadata.title.template,
+    absolute: config.site.metadata.title.absolute,
+    default: config.site.metadata.title.default,
+    template: config.site.metadata.title.template,
   },
-  description: config.blog.metadata.description,
+  description: config.site.metadata.description,
   openGraph: {
-    title: config.blog.metadata.title.default,
-    description: config.blog.metadata.description,
+    title: config.site.metadata.title.default,
+    description: config.site.metadata.description,
   }
 };
 
