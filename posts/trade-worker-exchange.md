@@ -11,6 +11,8 @@ image:
 
 Living and learning abroad in its current form is largely limited to young people attending university. However, considering that 63% of Americans lack a bachelor's degree ([U.S. Census Bureau, 2022](https://www.pewresearch.org/short-reads/2022/04/12/10-facts-about-todays-college-graduates/)), the majority of Americans are not even faced with this opportunity. There are alternatives, such as Australia's holiday working visa, but these don't include the assurance of job security on return and are age-restricted. The narrowness of these pathways makes it impossible or impractical for the average trade worker over the age of 30.
 
+Bridging that gap, the U.S. Department of State should sponsor a transatlantic exchange program for trade workers to increase cultural exchange, creating a new pathway for millions of Americans to spend extended time abroad.
+
 A trade exchange would be a practical way for adults in a trade field to experience life abroad with greatly reduced complexity and financial hardship. For the worker, they are guaranteed employment in their domain for the duration of the stay—so participants who have loans or a mortgage will be able to keep those financial commitments—and meanwhile at their original worksite, their job is secure and temporarily filled by a visiting worker who is also participating in the exchange.
 
 Imagine: American electricians exchanging with German counterparts for 3-6 months, or American wheat farmers swapping with those from New Zealand or (one day) Ukraine.
