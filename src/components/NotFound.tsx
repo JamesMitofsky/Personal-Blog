@@ -14,7 +14,7 @@ export const NotFound = async () => {
       <Header />
       <div className="flex justify-center items-center flex-col flex-1 md:gap-24">
         <div className="max-w-2xl mx-auto flex flex-col items-center text-center gap-5">
-          <h1 className="text-3xl font-semibold mb-4 text-center">Oops! This page couldn't be found.</h1>
+          <h1 className="text-3xl font-semibold mb-4 text-center">Oops! This page couldn&apos;t be found.</h1>
           <Button asChild className="mb-16">
             <Link href="/" className="flex items-center">
               <Home className="mr-2 h-4 w-4" />Return home
