@@ -18,6 +18,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: config.site.metadata.title.default,
     description: config.site.metadata.description,
+    images: [{
+      url: new URL('/og-image.jpeg', process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000').toString(),
+      width: 1200,
+      height: 630,
+      alt: config.site.metadata.title.default,
+    }],
   }
 };
 
