@@ -1,10 +1,11 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.SITE_URL || 'https://jamesm.it',
+  siteUrl: process.env.SITE_URL || 'https://www.jamesm.it',
   generateRobotsTxt: true,
   changefreq: 'weekly',
   priority: 0.7,
   generateIndexSitemap: false,
+  exclude: ['/tag', '/tag/*'],
   additionalPaths: async (config) => {
     // Get all posts
     const posts = require('fs').readdirSync('./posts')
