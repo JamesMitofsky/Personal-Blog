@@ -4,7 +4,7 @@ const buildConfig = () => {
   const defaultTitle = "James Mitofsky – Policy, Global Affairs, & Reflections";
 
   return {
-    baseUrl: process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
+    baseUrl: "https://www.jamesm.it",
     site: {
       name: "James Mitofsky",
       metadata: {
@@ -16,7 +16,6 @@ const buildConfig = () => {
         description: oneLinerDescription,
       },
     },
-    ogImageSecret: process.env.OG_IMAGE_SECRET || "your-secret-key-for-og-image-generation",
   };
 };
 
