@@ -29,11 +29,9 @@ export async function getPost(slug: string): Promise<Post> {
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const { data, content } = matter(fileContents);
 
-  // Use remark to convert markdown into HTML string
-  const processedContent = await remark()
-    .use(html)
-    .process(content);
-  const contentHtml = processedContent.toString();
+  // Skip HTML conversion since we're using ReactMarkdown on the client side
+  // This allows HTML in markdown to be preserved
+  const contentHtml = content; // Just pass the raw markdown content
 
   // If there's an image in the frontmatter, import it
   let imageProps: ImageProps | undefined;

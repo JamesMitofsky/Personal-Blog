@@ -4,30 +4,25 @@ import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
+import rehypeRaw from "rehype-raw";
 import "highlight.js/styles/github-dark.css";
 
 export const PostContent = ({ content }: { content: string }) => {
   return (
-    <div className="prose prose-lg dark:prose-invert max-w-none 
-      prose-headings:font-bold 
-      prose-a:text-primary hover:prose-a:opacity-70
-      prose-p:text-base prose-p:leading-relaxed
-      prose-li:text-base
-      prose-pre:bg-zinc-900 prose-pre:border prose-pre:border-zinc-800
-      prose-code:text-sm prose-code:leading-relaxed
+    <div className="
       prose-img:rounded-lg">
-      <ReactMarkdown 
+      <ReactMarkdown
         remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeHighlight]}
+        rehypePlugins={[rehypeHighlight, rehypeRaw]}
         components={{
           pre: ({ children }) => <pre className="not-prose">{children}</pre>,
           code: ({ node, className, children }) => {
             const match = /language-(\w+)/.exec(className || '')
-            const isInPre = node?.type === 'element' && 
-                           'tagName' in node && 
-                           node.tagName === 'code' && 
-                           node.position?.start.line !== node.position?.end.line
-            
+            const isInPre = node?.type === 'element' &&
+              'tagName' in node &&
+              node.tagName === 'code' &&
+              node.position?.start.line !== node.position?.end.line
+
             if (isInPre) {
               return (
                 <code className={className}>
@@ -35,7 +30,7 @@ export const PostContent = ({ content }: { content: string }) => {
                 </code>
               )
             }
-            
+
             return (
               <code className="bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded-md text-sm">
                 {children}
@@ -52,7 +47,7 @@ export const PostContent = ({ content }: { content: string }) => {
 
 export const BlogPostContent = ({ post }: { post: Post }) => {
   if (!post) return null;
-  
+
   return (
     <article className="max-w-3xl mx-auto my-8">
       <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
@@ -67,17 +62,8 @@ export const BlogPostContent = ({ post }: { post: Post }) => {
           {new Date(post.publishedAt).toLocaleDateString()}
         </time>
       </div>
-      <div 
-        className="prose prose-lg dark:prose-invert max-w-none 
-          prose-headings:font-bold 
-          prose-a:text-primary hover:prose-a:opacity-70
-          prose-p:text-base prose-p:leading-relaxed
-          prose-li:text-base
-          prose-pre:bg-zinc-900 prose-pre:border prose-pre:border-zinc-800
-          prose-code:text-sm prose-code:leading-relaxed
-          prose-img:rounded-lg"
-        dangerouslySetInnerHTML={{ __html: post.contentHtml }} 
-      />
+      <PostContent content={post.contentHtml} />
+
       {post.tags && post.tags.length > 0 && (
         <div className="mt-10 opacity-40 text-sm">
           {post.tags.map((tag) => (
