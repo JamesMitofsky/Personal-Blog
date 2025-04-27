@@ -4,6 +4,7 @@ import { getPost, getRelatedPosts } from "@/lib/posts";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { PostContent } from "@/components/BlogPostContent";
 
 interface Props {
   params: {
@@ -66,8 +67,7 @@ export default async function Page({ params }: Props) {
             />
           ) : null}
 
-          <div dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
-
+          <PostContent content={post.contentHtml} />
 
           <div className="mb-6 mt-24 text-sm">
             <time className="text-gray-500">
